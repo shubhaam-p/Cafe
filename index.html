@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-Based Food Ordering</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .menu-item, .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu-item img, .cart-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+        }
+        .menu-details {
+            text-align: left;
+        }
+        .add-btn, .quantity button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-btn:hover, .quantity button:hover {
+            background-color: #218838;
+        }
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .action-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .action-buttons button:hover {
+            background-color: #0056b3;
+        }
+        #place-order.disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu" class="container">
+        <h1>Menu</h1>
+        <div id="menu-list"></div>
+        <div class="action-buttons">
+            <button onclick="viewCart()">View Cart</button>
+        </div>
+    </div>
+    
+    <div id="cart" class="container" style="display:none;">
+        <h1>Cart</h1>
+        <div id="cart-list"></div>
+        <h3>Total: $<span id="cart-total">0</span></h3>
+        <div class="action-buttons">
+            <button id="place-order" onclick="placeOrder()" disabled>Place Order</button>
+            <button onclick="goBack()">Back to Menu</button>
+        </div>
+    </div>
+    
+    <div id="order-success" class="container" style="display:none;">
+        <h1>Order Placed Successfully!</h1>
+        <p>Thank you for your order.</p>
+    </div>
+    
+    <script>
+        const menuItems = [
+            { name: "Burger", price: 5, desc: "Juicy grilled burger with cheese", img: "burger.jpg" },
+            { name: "Pizza", price: 8, desc: "Delicious cheesy pizza with toppings", img: "pizza.jpg" },
+            { name: "Pasta", price: 7, desc: "Creamy Alfredo pasta with herbs", img: "pasta.jpg" },
+            { name: "Salad", price: 4, desc: "Fresh garden salad with dressing", img: "salad.jpg" }
+        ];
+        let cart = [];
+
+        function displayMenu() {
+            const menuList = document.getElementById("menu-list");
+            menuList.innerHTML = "";
+            menuItems.forEach((item, index) => {
+                let found = cart.find(cartItem => cartItem.name === item.name);
+                let quantity = found ? found.quantity : 0;
+                let div = document.createElement("div");
+                div.classList.add("menu-item");
+                div.innerHTML = `
+                    <div class="menu-details">
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <strong>$${item.price}</strong>
+                    </div>
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="menu-actions">
+                        ${quantity > 0 ? 
+                            `<div class='quantity'>
+                                <button onclick='updateMenuQuantity(${index}, -1)'>-</button>
+                                <span>${quantity}</span>
+                                <button onclick='updateMenuQuantity(${index}, 1)'>+</button>
+                            </div>` 
+                            : `<button class='add-btn' onclick='updateMenuQuantity(${index}, 1)'>Add</button>`
+                        }
+                    </div>`;
+                menuList.appendChild(div);
+            });
+        }
+
+        function updateMenuQuantity(index, change) {
+            let found = cart.find(item => item.name === menuItems[index].name);
+            if (found) {
+                found.quantity += change;
+                if (found.quantity <= 0) {
+                    cart = cart.filter(item => item.name !== found.name);
+                }
+            } else if (change > 0) {
+                cart.push({ ...menuItems[index], quantity: 1 });
+            }
+            displayMenu();
+        }
+
+        function viewCart() {
+            document.getElementById("menu").style.display = "none";
+            document.getElementById("cart").style.display = "block";
+            const cartList = document.getElementById("cart-list");
+            cartList.innerHTML = "";
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price * item.quantity;
+                let div = document.createElement("div");
+                div.classList.add("cart-item");
+                div.innerHTML = `
+                    <div class="menu-details">
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <strong>$${item.price}</strong>
+                    </div>
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="menu-actions">
+                        <div class='quantity'>
+                            <button onclick='updateQuantity(${index}, -1)'>-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick='updateQuantity(${index}, 1)'>+</button>
+                        </div>
+                    </div>`;
+                cartList.appendChild(div);
+            });
+            document.getElementById("cart-total").innerText = total;
+            document.getElementById("place-order").disabled = cart.length === 0;
+        }
+
+        function goBack() {
+            document.getElementById("menu").style.display = "block";
+            document.getElementById("cart").style.display = "none";
+        }
+
+        function placeOrder() {
+            document.getElementById("cart").style.display = "none";
+            document.getElementById("order-success").style.display = "block";
+        }
+
+        displayMenu();
+    </script>
+</body>
+</html>
