@@ -1,0 +1,149 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f8f8;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures full viewport height */
+    margin: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.menu-item,
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-item img,
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+}
+
+.menu-details {
+    text-align: left;
+}
+
+.add-btn,
+.quantity button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-btn:hover,
+.quantity button:hover {
+    background-color: #218838;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.action-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.action-buttons button:hover {
+    background-color: #0056b3;
+}
+
+#place-order.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Ensure logo does not shrink */
+.logo {
+    flex-shrink: 0;
+}
+
+.logo img {
+    width: 50px;
+    height: auto;
+    border-radius: 50%;
+}
+
+/* Title should align to the right but stay visible */
+.title {
+    font-size: 24px;
+    font-family: 'Pacifico', cursive;
+    white-space: nowrap;
+    margin-left: auto; /* Pushes title to the right */
+    padding-right: 50px; /* Adds spacing from the right edge */
+    max-width: 50%; /* Prevents title from overflowing */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ensures the body takes full height */
+
+/* Pushes the footer to the bottom when content is short */
+.content {
+    flex: 1;
+}
+
+/* Footer styling */
+.footer {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Google Font for title */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
