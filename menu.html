@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Meta -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Title -->
+    <title>BMVP - Online Ordering System</title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <link rel="apple-touch-icon" href="assets/img/favicon_60x60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon_76x76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon_120x120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon_152x152.png">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Raleway:wght@100;200;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS Core -->
+    <link rel="stylesheet" href="dist/css/core.css" />
+
+    <!-- CSS Theme -->
+    <link id="theme" rel="stylesheet" href="dist/css/theme-beige.css" />
+
+    <style>
+        /* Hover effect: Change text color to white and background to gray */
+        .quantity-selector button:hover {
+            /* background-color: #6c757d; */
+            /* Gray background */
+            color: white !important;
+            /* White text */
+        }
+
+        /* Active effect (when clicked): Keep text white */
+        .quantity-selector button:active,
+        .quantity-selector button:focus {
+            /* background-color: #6c757d !important; */
+            /* Gray background */
+            color: white !important;
+            /* White text */
+            /* border-color: #6c757d !important; */
+            /* Keep border consistent */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Body Wrapper -->
+    <div id="body-wrapper" class="animsition">
+
+        <!-- Header -->
+        <header id="header" class="light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- Logo -->
+                        <div class="module module-logo" style="background-color: #ffd772;">
+                            <a href="index.html">
+                                <img src="assets/img/BMVP.jpeg" alt="" width="200">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                    </div>
+                    <div class="col-md-2">
+                        <a href="#" class="module module-cart right" data-toggle="panel-cart">
+                            <span class="cart-icon">
+                                <i class="ti ti-shopping-cart"></i>
+                                <span class="notification">3</span>
+                            </span>
+                            <span class="cart-value">$<span class="value">23.00</span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header / End -->
+
+        <!-- Header -->
+        <header id="header-mobile" class="light">
+
+            <div class="module module-logo">
+                <a href="index.html">
+                    <img src="assets/img/BMVP_mobile.jpeg" alt="">
+                </a>
+            </div>
+
+            <a href="#" class="module module-cart" data-toggle="panel-cart">
+                <i class="ti ti-shopping-cart"></i>
+                <span class="notification">3</span>
+            </a>
+
+        </header>
+        <!-- Header / End -->
+
+        <!-- Content -->
+        <div id="content">
+
+            <!-- Page Title -->
+            <div class="page-title" style="background-color: #862a2d;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 offset-lg-4">
+                            <h1 class="mb-0" style="color: #ffd772;">Our Menu</h1>
+                            <h4 class="mb-0" style="color: white;">The Taste of Mumbai in Every Bite!</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <div class="container">
+                    <div class="row no-gutters">
+                        <div class="col-md-10 offset-md-1" role="tablist">
+                            <!-- Menu Category / Burgers -->
+                            <div id="Burgers" class="menu-category">
+                                <div class="menu-category-title collapse-toggle" role="tab"
+                                    data-target="#menuBurgersContent" data-toggle="collapse" aria-expanded="true">
+                                    <div class="bg-image"><img
+                                            src="http://assets.suelo.pl/soup/img/photos/menu-title-burgers.jpg" alt="">
+                                    </div>
+                                    <h2 class="title">Burgers</h2>
+                                </div>
+                                <div id="menuBurgersContent" class="menu-category-content collapse show">
+                                    <div class="p-4">
+                                        <div class="row gutters-sm">
+                                            <div class="col-lg-4 col-6">
+                                                <!-- Menu Item -->
+                                                <div class="menu-item menu-grid-item">
+                                                    <img class="mb-4"
+                                                        src="http://assets.suelo.pl/soup/img/products/product-burger.jpg"
+                                                        alt="">
+                                                    <h6 class="mb-0">Beef Burger</h6>
+                                                    <span class="text-muted text-sm">Beef, cheese, potato, onion,
+                                                        fries</span>
+                                                    <div class="row align-items-center mt-4">
+                                                        <div class="col-sm-6"><span class="text-md mr-4">
+                                                                <span class="text-muted">from</span>
+                                                                $<span data-product-base-price>9.00</span></span></div>
+                                                        <div class="col-sm-6 text-sm-right mt-2 mt-sm-0">
+                                                            <button class="btn btn-outline-secondary btn-sm add-to-cart"
+                                                                data-action="open-cart-modal" data-id="1"><span>Add to
+                                                                    cart</span></button>
+
+                                                            <!-- Quantity Selector (Hidden by Default) -->
+                                                            <div class="quantity-selector d-none">
+                                                                <button
+                                                                    class="btn btn-sm btn-outline-secondary decrease-qty">−</button>
+                                                                <span class="px-2 quantity">1</span>
+                                                                <button
+                                                                    class="btn btn-sm btn-outline-secondary increase-qty">+</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer id="footer" style="background-color: #862a2d;">
+
+                <div class="container">
+                    <!-- Footer 1st Row -->
+                    <div class="footer-first-row row">
+                        <div class="col-lg-3 text-center" style="background-color: #ffd772;">
+                            <a href="index.html"><img src="assets/img/BMVP.jpeg" alt="" width="200"
+                                    class="mt-5 mb-5"></a>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <h5 style="color: #ffd772;">Contact us</h5>
+                            <ul class="list-posts">
+                                <li>
+                                    <span class="title" style="color: #ffd772;">Address:</span>
+                                    <span style="color: white;">Suraj, Gujrat</span>
+                                </li>
+                                <li>
+                                    <span class="title" style="color: #ffd772;">Contact:</span>
+                                    <span style="color: white;">+91 9876543210</span>
+                                </li>
+                                <li>
+                                    <span class="title" style="color: #ffd772;">Email:</span>
+                                    <span style="color: white;">bombaymisal.vadapav@gmail.com</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-5 col-md-6">
+                            <h5 class="title mb-3" style="color: #ffd772;">Social Media</h5>
+                            <a href="#" class="icon icon-social icon-circle icon-sm icon-facebook"
+                                style="background-color: #ffd772;"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="icon icon-social icon-circle icon-sm icon-google"
+                                style="background-color: #ffd772;"><i class="fa fa-google"></i></a>
+                            <a href="#" class="icon icon-social icon-circle icon-sm icon-twitter"
+                                style="background-color: #ffd772;"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="icon icon-social icon-circle icon-sm icon-youtube"
+                                style="background-color: #ffd772;"><i class="fa fa-youtube"></i></a>
+                            <a href="#" class="icon icon-social icon-circle icon-sm icon-instagram"
+                                style="background-color: #ffd772;"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <!-- Footer 2nd Row -->
+                    <div class="footer-second-row">
+                        <span class="text-muted">Copyright FreeLancers 2025©.</span>
+                    </div>
+                </div>
+
+                <!-- Back To Top -->
+                <button id="back-to-top" class="back-to-top"><i class="ti ti-angle-up"></i></button>
+
+            </footer>
+            <!-- Footer / End -->
+
+        </div>
+        <!-- Content / End -->
+
+        <!-- Panel Cart -->
+        <div id="panel-cart">
+            <div class="panel-cart-container">
+                <div class="panel-cart-title">
+                    <h5 class="title">Your Cart</h5>
+                    <button class="close" data-toggle="panel-cart"><i class="ti ti-close"></i></button>
+                </div>
+                <div class="panel-cart-content">
+                    <table class="cart-table">
+                        <tr>
+                            <td class="title">
+                                <span class="name"><a href="#product-modal" data-toggle="modal">Pizza Chicked
+                                        BBQ</a></span>
+                                <span class="caption text-muted">26”, deep-pan, thin-crust</span>
+                            </td>
+                            <td class="price">$9.82</td>
+                            <td class="actions">
+                                <button class="btn btn-sm decrease-qty">-</button>
+                                <span class="px-2 quantity">1</span>
+                                <button class="btn btn-sm increase-qty">+</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <span class="name"><a href="#product-modal" data-toggle="modal">Beef Burger</a></span>
+                                <span class="caption text-muted">Large (500g)</span>
+                            </td>
+                            <td class="price">$9.82</td>
+                            <td class="actions">
+                                <button class="btn btn-sm decrease-qty">-</button>
+                                <span class="px-2 quantity">1</span>
+                                <button class="btn btn-sm increase-qty">+</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="title">
+                                <span class="name"><a href="#product-modal" data-toggle="modal">Extra Burger</a></span>
+                                <span class="caption text-muted">Small (200g)</span>
+                            </td>
+                            <td class="price text-success">$0.00</td>
+                            <td class="actions">
+                                <button class="btn btn-sm decrease-qty">-</button>
+                                <span class="px-2 quantity">1</span>
+                                <button class="btn btn-sm increase-qty">+</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="cart-summary">
+                        <div class="row">
+                            <div class="col-7 text-right text-muted">Order total:</div>
+                            <div class="col-5"><strong>$21.02</strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7 text-right text-muted">CGST:</div>
+                            <div class="col-5"><strong>$0.99</strong></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7 text-right text-muted">SGST:</div>
+                            <div class="col-5"><strong>$0.99</strong></div>
+                        </div>
+                        <hr class="hr-sm">
+                        <div class="row text-lg">
+                            <div class="col-7 text-right text-muted">Total:</div>
+                            <div class="col-5"><strong>$23</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="bmvp_confirmation.html" class="panel-cart-action btn btn-secondary btn-block btn-lg"><span>Go to
+                    checkout</span></a>
+        </div>
+
+
+        <!-- Body Overlay -->
+        <div id="body-overlay"></div>
+
+    </div>
+
+    <!-- JS Core -->
+    <script src="dist/js/core.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.addEventListener("click", function () {
+                    let parent = this.parentElement;
+                    let quantitySelector = parent.querySelector(".quantity-selector");
+
+                    // Hide the "Add to Cart" button and show the quantity selector
+                    this.classList.add("d-none");
+                    quantitySelector.classList.remove("d-none");
+
+                    // Reset quantity to 1
+                    let quantityDisplay = quantitySelector.querySelector(".quantity");
+                    quantityDisplay.textContent = "1";
+                });
+            });
+
+            document.querySelectorAll(".increase-qty").forEach(button => {
+                button.addEventListener("click", function () {
+                    let quantityDisplay = this.parentElement.querySelector(".quantity");
+                    let quantity = parseInt(quantityDisplay.textContent);
+                    quantityDisplay.textContent = quantity + 1;
+                });
+            });
+
+            document.querySelectorAll(".decrease-qty").forEach(button => {
+                button.addEventListener("click", function () {
+                    let quantityDisplay = this.parentElement.querySelector(".quantity");
+                    let quantity = parseInt(quantityDisplay.textContent);
+                    if (quantity > 1) {
+                        quantityDisplay.textContent = quantity - 1;
+                    } else {
+                        // Hide quantity selector and show "Add to Cart" button again if quantity is 0
+                        let parent = this.closest(".text-sm-right");
+                        parent.querySelector(".quantity-selector").classList.add("d-none");
+                        parent.querySelector(".add-to-cart").classList.remove("d-none");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
