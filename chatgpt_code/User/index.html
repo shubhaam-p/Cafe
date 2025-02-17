@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR-Based Food Ordering</title>
+    <link rel="stylesheet" href="CSS/styles.css" />
+
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <img src="logo.png" alt="Cafe Logo" />
+        </div>
+        <div class="title">Cafe</div>
+      </nav>
+    </header>
+  </head>
+
+  <body>
+    <div class="content">
+      <div id="menu" class="container">
+        <h1>Menu</h1>
+        <div id="menu-list"></div>
+        <div class="action-buttons">
+          <button onclick="viewCart()">View Cart</button>
+        </div>
+      </div>
+
+      <div id="cart" class="container" style="display: none">
+        <h1>Cart</h1>
+        <div id="cart-list"></div>
+        <h3>Total: $<span id="cart-total">0</span></h3>
+        <div class="action-buttons">
+          <button id="place-order" onclick="placeOrder()" disabled>
+            Place Order
+          </button>
+          <button onclick="goBack()">Back to Menu</button>
+        </div>
+      </div>
+
+      <div id="order-success" class="container" style="display: none">
+        <h1>Order Placed Successfully!</h1>
+        <p>Thank you for your order.</p>
+        <div class="action-buttons">
+          <button onclick="goBack(true)">Back to Menu</button>
+        </div>
+      </div>
+
+      <script>
+        const menuItems = [
+          {
+            name: "Burger",
+            price: 5,
+            desc: "Juicy grilled burger with cheese",
+            img: "burger.jpg",
+          },
+          {
+            name: "Pizza",
+            price: 8,
+            desc: "Delicious cheesy pizza with toppings",
+            img: "pizza.jpg",
+          },
+          {
+            name: "Pasta",
+            price: 7,
+            desc: "Creamy Alfredo pasta with herbs",
+            img: "pasta.jpg",
+          },
+          {
+            name: "Salad",
+            price: 4,
+            desc: "Fresh garden salad with dressing",
+            img: "salad.jpg",
+          },
+        ];
+        let cart = [];
+
+        function displayMenu() {
+          const menuList = document.getElementById("menu-list");
+          menuList.innerHTML = "";
+          menuItems.forEach((item, index) => {
+            let found = cart.find((cartItem) => cartItem.name === item.name);
+            let quantity = found ? found.quantity : 0;
+            let div = document.createElement("div");
+            div.classList.add("menu-item");
+            div.innerHTML = `
+                    <div class="menu-details">
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <strong>$${item.price}</strong>
+                    </div>
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="menu-actions">
+                        ${
+                          quantity > 0
+                            ? `<div class='quantity'>
+                                <button onclick='updateMenuQuantity(${index}, -1)'>-</button>
+                                <span>${quantity}</span>
+                                <button onclick='updateMenuQuantity(${index}, 1)'>+</button>
+                            </div>`
+                            : `<button class='add-btn' onclick='updateMenuQuantity(${index}, 1)'>Add</button>`
+                        }
+                    </div>`;
+            menuList.appendChild(div);
+          });
+        }
+
+        function updateMenuQuantity(index, change) {
+          let found = cart.find((item) => item.name === menuItems[index].name);
+          if (found) {
+            found.quantity += change;
+            if (found.quantity <= 0) {
+              cart = cart.filter((item) => item.name !== found.name);
+            }
+          } else if (change > 0) {
+            cart.push({ ...menuItems[index], quantity: 1 });
+          }
+          displayMenu();
+        }
+
+        function viewCart() {
+          document.getElementById("menu").style.display = "none";
+          document.getElementById("cart").style.display = "block";
+          const cartList = document.getElementById("cart-list");
+          const placeOrderBtn = document.getElementById("place-order");
+
+          cartList.innerHTML = "";
+
+          if (cart.length === 0) {
+            cartList.innerHTML =
+              "<p>Your cart is empty. Please select items from the menu.</p>";
+            document.getElementById("cart-total").innerText = "0";
+
+            placeOrderBtn.disabled = true;
+            placeOrderBtn.classList.add("disabled-btn"); // Apply gray effect
+            return;
+          }
+
+          let total = 0;
+          cart.forEach((item, index) => {
+            total += item.price * item.quantity;
+            let div = document.createElement("div");
+            div.classList.add("cart-item");
+            div.innerHTML = `
+        <div class="menu-details">
+            <h3>${item.name}</h3>
+            <p>${item.desc}</p>
+            <strong>$${item.price}</strong>
+        </div>
+        <img src="${item.img}" alt="${item.name}">
+        <div class="menu-actions">
+            <div class='quantity'>
+                <button onclick='updateQuantity(${index}, -1)'>-</button>
+                <span>${item.quantity}</span>
+                <button onclick='updateQuantity(${index}, 1)'>+</button>
+            </div>
+        </div>`;
+            cartList.appendChild(div);
+          });
+
+          document.getElementById("cart-total").innerText = total;
+
+          // Enable button and remove gray effect
+          placeOrderBtn.disabled = false;
+          placeOrderBtn.classList.remove("disabled-btn");
+        }
+
+        function updateQuantity(index, change) {
+          cart[index].quantity += change;
+          if (cart[index].quantity <= 0) {
+            cart.splice(index, 1);
+          }
+          viewCart();
+        }
+
+        function goBack(reset = false) {
+          if (reset) {
+            cart = []; // Reset cart only when coming from the order success page
+          }
+          displayMenu();
+          document.getElementById("menu").style.display = "block";
+          document.getElementById("cart").style.display = "none";
+          document.getElementById("order-success").style.display = "none";
+        }
+
+        function placeOrder() {
+          cart = [];
+          displayMenu();
+          document.getElementById("cart").style.display = "none";
+          document.getElementById("order-success").style.display = "block";
+        }
+
+        displayMenu();
+      </script>
+    </div>
+    <footer class="footer">
+      <p>&copy; 2025 Cafe - FreeLancers. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

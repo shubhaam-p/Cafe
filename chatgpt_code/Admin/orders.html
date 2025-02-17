@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders - Admin Panel</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Ensure body takes up full height */
+      html, body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f9fa;
+      }
+
+      /* Navbar Styling */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+
+      .logo img {
+        width: 50px;
+        height: auto;
+        border-radius: 50%;
+      }
+
+      .title {
+        font-size: 24px;
+        font-family: "Pacifico", cursive;
+        margin-left: auto;
+        padding-right: 50px;
+      }
+
+      /* Orders Container */
+      .orders-container {
+        flex-grow: 1; /* Expands to fill remaining space */
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        max-width: 1200px;
+        background: #fff;
+        border-radius: 10px;
+        overflow-y: auto;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 80px auto 20px auto; /* Ensure space below navbar */
+        padding-bottom: 20px;
+      }
+
+      /* Tables Section */
+      .tables-section {
+        flex: 2;
+        padding: 20px;
+        background: #fff;
+      }
+
+      .tables-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .table-card {
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .table-card.occupied {
+        background: #e8f5e9;
+        box-shadow: 0 0 10px rgba(0, 128, 0, 0.5);
+      }
+
+      .table-card:hover {
+        transform: scale(1.05);
+      }
+
+      /* Order Details */
+      .order-details {
+        flex: 1;
+        padding: 20px;
+        background: #f1f1f1;
+        border-left: 1px solid #ccc;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 10px;
+        background: #333;
+        color: white;
+        width: 100%;
+        margin-top: auto; /* Pushes footer to bottom */
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="Cafe Logo" />
+      </div>
+      <div class="title">Cafe Admin Panel</div>
+    </nav>
+
+    <div class="orders-container">
+      <div class="tables-section">
+        <h2>Tables</h2>
+        <div class="tables-grid" id="tables-grid"></div>
+      </div>
+      <div class="order-details" id="order-details">
+        <h2>Order Details</h2>
+        <div id="order-info">
+          <p>Select a table to view details.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>&copy; 2025 Cafe - FreeLancers. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const tables = [
+        { tableNo: 1, orderNo: 101 },
+        { tableNo: 2, orderNo: null },
+        { tableNo: 3, orderNo: 102 },
+        { tableNo: 4, orderNo: null },
+        { tableNo: 5, orderNo: 103 },
+        { tableNo: 6, orderNo: null },
+        { tableNo: 7, orderNo: 104 },
+        { tableNo: 8, orderNo: null },
+        { tableNo: 9, orderNo: 105 },
+        { tableNo: 10, orderNo: null },
+        { tableNo: 11, orderNo: 106 },
+        { tableNo: 12, orderNo: null },
+      ];
+
+      function renderTables() {
+        const grid = document.getElementById("tables-grid");
+        grid.innerHTML = "";
+        tables.forEach((table) => {
+          const div = document.createElement("div");
+          div.classList.add("table-card");
+          div.innerHTML = `<h3>Table ${table.tableNo}</h3>`;
+          if (table.orderNo) {
+            div.innerHTML += `<p>Order: ${table.orderNo}</p>`;
+            div.classList.add("occupied");
+          }
+          div.onclick = () => showOrderDetails(table);
+          grid.appendChild(div);
+        });
+      }
+
+      function showOrderDetails(table) {
+        const details = document.getElementById("order-info");
+        if (table.orderNo) {
+          details.innerHTML = `<h3>Table ${table.tableNo}</h3><p>Order No: ${table.orderNo}</p><p>Order details will go here...</p>`;
+        } else {
+          details.innerHTML = `<h3>Table ${table.tableNo}</h3><p>No active order.</p>`;
+        }
+      }
+
+      renderTables();
+    </script>
+  </body>
+</html>
