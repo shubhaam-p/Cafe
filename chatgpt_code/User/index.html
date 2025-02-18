@@ -5,31 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR-Based Food Ordering</title>
     <link rel="stylesheet" href="CSS/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
 
-    <header>
-      <nav class="navbar">
-        <div class="logo">
-          <img src="logo.png" alt="Cafe Logo" />
-        </div>
-        <div class="title">Cafe</div>
-      </nav>
-    </header>
+
+    <header id="header-mobile" class="light">
+      <div class="module module-logo">
+          <a href="index.html">
+              <img src="assets/img/mobile-logo.jpeg" alt="">
+          </a>
+      </div>
+  </header>
   </head>
 
   <body>
     <div class="content">
-      <div id="menu" class="container">
-        <h1>Menu</h1>
-        <div id="menu-list"></div>
+      <div id="menu-header" class="page-title" style="background-color: #862a2d;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-4">
+                    <div class="mb-0 main" style="color: #ffd772;">Our Menu</div>
+                    <div class="mb-0 sub-title" style="color: white;">The Taste of Mumbai in Every Bite!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <div id="menu" class="custom-container">
+        <div id="menu-list" class="row"></div>
         <div class="action-buttons">
           <button onclick="viewCart()">View Cart</button>
         </div>
       </div>
 
-      <div id="cart" class="container" style="display: none">
-        <h1>Cart</h1>
+      <div class="home-cart">
+        <div class="mob-footer">
+          <div role="presentation" id="menu-nav-item" onclick="goBack()" class="nav-item u_cursor_pointer active">
+            <img src="assets/home.svg" alt="home">
+            <p class="mob-footer-label takeaway">Menu</p>
+          </div>
+          <div role="presentation" id="search-nav-item" class="nav-item u_cursor_pointer">
+            <img src="assets/search.svg" alt="offers">
+            <p class="mob-footer-label ">Search</p>
+          </div>
+          <div role="presentation" id="cart-nav-item" class="nav-item u_cursor_pointer" onclick="viewCart()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg>
+            <p class="mob-footer-label">Cart</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="cart" class="custom-container" style="display: none">
+        <h3>Your Order</h3>
         <div id="cart-list"></div>
-        <h3>Total: $<span id="cart-total">0</span></h3>
+        <h5>Total: ₹<span id="cart-total">0</span></h5>
         <div class="action-buttons">
           <button id="place-order" onclick="placeOrder()" disabled>
             Place Order
@@ -38,7 +68,7 @@
         </div>
       </div>
 
-      <div id="order-success" class="container" style="display: none">
+      <div id="order-success" class="custom-container" style="display: none">
         <h1>Order Placed Successfully!</h1>
         <p>Thank you for your order.</p>
         <div class="action-buttons">
@@ -52,55 +82,70 @@
             name: "Burger",
             price: 5,
             desc: "Juicy grilled burger with cheese",
-            img: "burger.jpg",
+            img: "assets/img/item1.jpg",
           },
           {
             name: "Pizza",
             price: 8,
             desc: "Delicious cheesy pizza with toppings",
-            img: "pizza.jpg",
+            img: "assets/img/item1.jpg",
           },
           {
             name: "Pasta",
             price: 7,
             desc: "Creamy Alfredo pasta with herbs",
-            img: "pasta.jpg",
+            img: "assets/img/item1.jpg",
           },
           {
             name: "Salad",
             price: 4,
             desc: "Fresh garden salad with dressing",
-            img: "salad.jpg",
+            img: "assets/img/item1.jpg",
           },
         ];
         let cart = [];
 
         function displayMenu() {
+          document.getElementById('menu-nav-item').click();
           const menuList = document.getElementById("menu-list");
           menuList.innerHTML = "";
           menuItems.forEach((item, index) => {
             let found = cart.find((cartItem) => cartItem.name === item.name);
             let quantity = found ? found.quantity : 0;
             let div = document.createElement("div");
-            div.classList.add("menu-item");
+            // div.classList.add("menu-item");
+            div.classList.add("col-12");
+            div.classList.add("col-md-6");
             div.innerHTML = `
-                    <div class="menu-details">
-                        <h3>${item.name}</h3>
-                        <p>${item.desc}</p>
-                        <strong>$${item.price}</strong>
-                    </div>
-                    <img src="${item.img}" alt="${item.name}">
-                    <div class="menu-actions">
-                        ${
-                          quantity > 0
-                            ? `<div class='quantity'>
-                                <button onclick='updateMenuQuantity(${index}, -1)'>-</button>
-                                <span>${quantity}</span>
-                                <button onclick='updateMenuQuantity(${index}, 1)'>+</button>
-                            </div>`
-                            : `<button class='add-btn' onclick='updateMenuQuantity(${index}, 1)'>Add</button>`
-                        }
-                    </div>`;
+                    <div class="cardd row mb-2">
+                      <div class="col-4 col-md-4">
+                        <img width="96" height="96" class="br-item" alt="${item.name}" src="${item.img}">
+                      </div>
+                      <div class="cardd-body col-8 col-md-8">
+                        <div class="cardd-details">
+                          <div class="cardd-title fs-20 fw-600">${item.name}</div>
+                          <div>
+                            <p class="cardd-text fs-15"> ${item.desc} </p>
+                          </div>
+                        </div>
+                        <div class="cardd-footer-custom">
+                          <div class="left-item">
+                            <span class="fw-600"> ₹${item.price}</span>
+                          </div>
+                        
+                          <div class="menuu-actions">
+                              ${
+                                quantity > 0
+                                  ? `<div class='quantity'>
+                                      <button onclick='updateMenuQuantity(${index}, -1)'>-</button>
+                                      <span>${quantity}</span>
+                                      <button onclick='updateMenuQuantity(${index}, 1)'>+</button>
+                                  </div>`
+                                  : `<button class='add-btn' onclick='updateMenuQuantity(${index}, 1)'>Add</button>`
+                              }
+                          </div>
+                        </div>
+                      </div>`;
             menuList.appendChild(div);
           });
         }
@@ -119,6 +164,8 @@
         }
 
         function viewCart() {
+          document.getElementById('cart-nav-item').click();
+          document.getElementById("menu-header").style.display = "none";
           document.getElementById("menu").style.display = "none";
           document.getElementById("cart").style.display = "block";
           const cartList = document.getElementById("cart-list");
@@ -141,20 +188,34 @@
             total += item.price * item.quantity;
             let div = document.createElement("div");
             div.classList.add("cart-item");
+            div.classList.add("col-12");
+            div.classList.add("col-md-6");
             div.innerHTML = `
-        <div class="menu-details">
-            <h3>${item.name}</h3>
-            <p>${item.desc}</p>
-            <strong>$${item.price}</strong>
-        </div>
-        <img src="${item.img}" alt="${item.name}">
-        <div class="menu-actions">
-            <div class='quantity'>
-                <button onclick='updateQuantity(${index}, -1)'>-</button>
-                <span>${item.quantity}</span>
-                <button onclick='updateQuantity(${index}, 1)'>+</button>
-            </div>
-        </div>`;
+                    <div class="cardd row mb-2">
+                      <div class="col-4 col-md-4">
+                        <img width="96" height="96" class="br-item" alt="${item.img}" src="https://starbucksstatic.cognizantorderserv.com/Items/Small/115298_1.jpg">
+                      </div>
+                      <div class="cardd-body col-8 col-md-8">
+                        <div class="cardd-details">
+                          <div class="cardd-title fs-20 fw-600">${item.name}</div>
+                          <div>
+                            <p class="cardd-text fs-15"> ${item.desc} </p>
+                          </div>
+                        </div>
+                        <div class="cardd-footer-custom">
+                          <div class="left-item">
+                            <span class="fw-600"> ₹${item.price}</span>
+                          </div>
+                        
+                          <div class="menuu-actions">
+                              <div class='quantity'>
+                                  <button onclick='updateQuantity(${index}, -1)'>-</button>
+                                  <span>${item.quantity}</span>
+                                  <button onclick='updateQuantity(${index}, 1)'>+</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>`;
             cartList.appendChild(div);
           });
 
@@ -179,6 +240,7 @@
           }
           displayMenu();
           document.getElementById("menu").style.display = "block";
+          document.getElementById("menu-header").style.display = "block";
           document.getElementById("cart").style.display = "none";
           document.getElementById("order-success").style.display = "none";
         }
@@ -190,11 +252,23 @@
           document.getElementById("order-success").style.display = "block";
         }
 
+        //For footer nav-bar
+        const navLinks = document.querySelectorAll('.nav-item');
+        navLinks.forEach(e =>{
+          e.addEventListener('click',()=>{
+            document.querySelector('.active')?.classList.remove('active');
+            e.classList.add('active');
+          })
+        })
+
+
         displayMenu();
       </script>
-    </div>
+      </div>
     <footer class="footer">
       <p>&copy; 2025 Cafe - FreeLancers. All rights reserved.</p>
     </footer>
   </body>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </html>
