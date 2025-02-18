@@ -71,7 +71,7 @@ body {
 }
 
 .action-buttons button {
-    background-color: #d3a21c;
+    background-color: #862a2d;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -83,7 +83,7 @@ body {
 }
 
 .action-buttons button:hover {
-    background-color: #d3a21c;
+    background-color: #862a2d;
 }
 
 #place-order.disabled {
@@ -293,7 +293,7 @@ body {
     height: auto;
     
 }
-#cart-list .action-buttons button {
+#cart .action-buttons button {
     padding:5px 8px!important;
 }
 #cart-list .cardd-title{
@@ -302,6 +302,9 @@ body {
 #cart-list .cardd-text {
     font-size: 12px;
     margin-bottom: 0.5rem;
+}
+#cart{
+    margin-bottom: 7rem;
 }
 /* menu-item */
 

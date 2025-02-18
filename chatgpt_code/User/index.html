@@ -64,7 +64,7 @@
           <button id="place-order" onclick="placeOrder()" disabled>
             Place Order
           </button>
-          <button onclick="goBack()">Back to Menu</button>
+          <button class="bg-dark" onclick="goBack()">Back to Menu</button>
         </div>
       </div>
 
@@ -193,7 +193,7 @@
             div.innerHTML = `
                     <div class="cardd row mb-2">
                       <div class="col-4 col-md-4">
-                        <img width="96" height="96" class="br-item" alt="${item.img}" src="https://starbucksstatic.cognizantorderserv.com/Items/Small/115298_1.jpg">
+                        <img width="96" height="96" class="br-item" alt="${item.name}" src="${item.img}">
                       </div>
                       <div class="cardd-body col-8 col-md-8">
                         <div class="cardd-details">
@@ -247,7 +247,6 @@
 
         function placeOrder() {
           cart = [];
-          displayMenu();
           document.getElementById("cart").style.display = "none";
           document.getElementById("order-success").style.display = "block";
         }
