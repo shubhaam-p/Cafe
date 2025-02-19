@@ -176,11 +176,9 @@ body {
 }
 .page-title .main, .main{
     font-size: 30px;
-    font-weight: 50 !important;
 }
 .page-title .sub-title{
     font-size: 17px;
-    font-weight: 10 !important;
 }
 
 #header-mobile.light {
@@ -291,7 +289,6 @@ body {
 
 #cart-list .cardd-details{
     height: auto;
-    
 }
 #cart .action-buttons button {
     padding:5px 8px!important;
