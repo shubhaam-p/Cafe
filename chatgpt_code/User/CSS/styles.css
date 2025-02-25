@@ -16,7 +16,7 @@ body {
 
 .custom-container {
     max-width: 600px;
-    /* margin: 50px auto; */
+    margin-bottom: 3.75rem;
     padding: 20px;
     background: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -185,6 +185,9 @@ body {
     color: #fff;
 }
 
+#header-mobile {
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2) !important;
+}
 #header-mobile.light {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
     background-color: #fff;
@@ -222,6 +225,7 @@ body {
     object-fit: contain;
     width: 20px;
     max-width: 20px;
+    filter: invert(33%) sepia(3%) saturate(283%) hue-rotate(155deg) brightness(100%) contrast(92%);
 }
 .mob-footer{
     display: flex;
@@ -305,13 +309,15 @@ body {
 
 .menu-category{
     overflow: auto;
+    padding: 1rem 1rem 0 1rem;
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2);
 }
 .menu-category .active{
     border-bottom: 2px solid #862a2d;
     font-weight: 500;
     color:#862a2d;
 }
-.menu-category .item-category {
+.menu-category .nav-item-category {
     font-size: 16px;
     padding: 0 1.5rem 0.8rem;
     text-align: center;
@@ -319,13 +325,13 @@ body {
 }
 
 .col-12.navbar-menu-category.fixed-top {
-    top: 60px;
+    /* top: 60px; */
     background-color: #f2f0eb;
     padding: 0;
 }
 
-.col-12.navbar-menu-category .order-title {
-    padding: 1rem 0;
+.col-12.navbar-menu-category .order-title, .search-title {
+    padding: 0.5rem 0;
     position: relative;
     background-color: #862a2d;
     color: #ffd772;
@@ -333,8 +339,28 @@ body {
 }
 
 div#menu-category-wise-list{
-    margin-top: 7rem;
+    margin-top: 2rem;
 }
 /* category */
+
+/* search */
+#search-bar {
+    border-radius: 6px;
+    padding: 1.5rem 1rem;
+}
+
+#search .search-title{
+    margin-bottom: 1rem;
+}
+
+#search .col-12.fixed-top{
+    padding: 0;
+}
+
+#search-list{
+    background-color:#fbf6f0;
+}
+
+/* search */
 /* Google Font for title */
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');

@@ -33,39 +33,61 @@
       <div id="menu" class="custom-container">
 
         <div id="menu-list" class="d-flex justify-content-between flex-wrap categories-div p-2"></div>
-       
-        <div class="row" id="category-nav-container" style="display: none">
-          <div class="col-12 navbar-menu-category fixed-top">
-            <div class="order-title">
-              <div class="main">Order</div>
-            </div>
-              <div class="menu-category d-flex flex-nowrap">
-                <div class="item-category text-nowrap" category-name="misal-pav" id="misal-pav">Misal Pav</div>
-                <div class="item-category text-nowrap" category-name="samosa" id="samosa">Samosa</div>
-                <div class="item-category text-nowrap" category-name="pav-bhaji" id="pav-bhaji">Pav Bhaji</div>
-                <div class="item-category text-nowrap" category-name="sandwiches" id="sandwiches">Sandwiches</div>
-                <div class="item-category text-nowrap" category-name="drinks" id="drinks">Drinks</div>
-                <div class="item-category text-nowrap" category-name="chai" id="chai">Chai</div>
-                <div class="item-category text-nowrap" category-name="bhel" id="bhel">Mumbaiya Bhel</div>
-              </div>
-          </div>
-          <div id="menu-category-wise-list" class="row"></div>
-        </div>
-
         <div class="action-buttons">
           <button onclick="viewCart()">View Cart</button>
         </div>
       </div>
 
+        <div class="custom-container" id="category-nav-container">
+          <div class="col-12 navbar-menu-category fixed-top">
+            <div class="order-title">
+              <div class="main">Order</div>
+            </div>
+              <div class="menu-category d-flex flex-nowrap">
+                <div class="nav-item-category text-nowrap active" category-id="13" category-name="misal-pav" id="misal-pav">Misal Pav</div>
+                <div class="nav-item-category text-nowrap" category-id="12" category-name="samosa" id="samosa">Samosa</div>
+                <div class="nav-item-category text-nowrap" category-id="15" category-name="pav-bhaji" id="pav-bhaji">Pav Bhaji</div>
+                <div class="nav-item-category text-nowrap" category-id="14" category-name="sandwiches" id="sandwiches">Sandwiches</div>
+                <div class="nav-item-category text-nowrap" category-id="16" category-name="drinks" id="drinks">Drinks</div>
+                <div class="nav-item-category text-nowrap" category-id="17" category-name="chai" id="chai">Chai</div>
+                <div class="nav-item-category text-nowrap" category-id="18" category-name="bhel" id="bhel">Mumbaiya Bhel</div>
+              </div>
+          </div>
+          <div id="menu-category-wise-list" class="row"></div>
+        </div>
+
+      <div id="search" class="custom-container">
+        <div class="col-12 fixed-top">
+          <div class="search-title">
+            <div class="main">Search</div>
+          </div>
+        </div>
+        <div id="search-body" class="px-3">
+          <div class="input-group mb-2" id="search-bar-container">
+            <input type="text" class="form-control" id="search-bar" placeholder="Username">
+            <div class="input-group-append">
+              <div class="input-group-text"><img src="assets/search.svg" alt="offers"></div>
+            </div>
+          </div>
+          <div id="search-list"></div>
+        </div>
+      </div>
+
       <div class="home-cart fixed-bottom">
         <div class="mob-footer">
-          <div role="presentation" id="menu-nav-item" onclick="goBack()" class="nav-item u_cursor_pointer active">
+          <div role="presentation" id="home-nav-item" onclick="goBack()" class="nav-item u_cursor_pointer active">
             <img src="assets/home.svg" alt="home">
-            <p class="mob-footer-label takeaway">Menu</p>
+            <p class="mob-footer-label takeaway">Home</p>
           </div>
-          <div role="presentation" id="search-nav-item" class="nav-item u_cursor_pointer">
-            <img src="assets/search.svg" alt="offers">
-            <p class="mob-footer-label ">Search</p>
+          <div role="presentation" id="menu-nav-item" class="nav-item u_cursor_pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+              <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+            </svg>
+            <p class="mob-footer-label ">Menu</p>
+          </div>
+          <div role="presentation" id="search-nav-item" class="nav-item u_cursor_pointer" onclick="searchItem()">
+            <img src="assets/search.svg" alt="search">
+            <p class="mob-footer-label ">Search Menu</p>
           </div>
           <div role="presentation" id="cart-nav-item" class="nav-item u_cursor_pointer" onclick="viewCart()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -76,7 +98,7 @@
         </div>
       </div>
 
-      <div id="cart" class="custom-container" style="display: none">
+      <div id="cart" class="custom-container">
         <h3>Your Order</h3>
         <div id="cart-list"></div>
         <h5>Total: ₹<span id="cart-total">0</span></h5>
@@ -88,7 +110,7 @@
         </div>
       </div>
 
-      <div id="order-success" class="custom-container" style="display: none">
+      <div id="order-success" class="custom-container">
         <h1>Order Placed Successfully!</h1>
         <p>Thank you for your order.</p>
         <div class="action-buttons">
@@ -96,7 +118,7 @@
         </div>
       </div>
 
-  <footer class="footer">
+  <footer class="footer" id="footer-bar">
     <p>&copy; 2025 Cafe - FreeLancers. All rights reserved.</p>
   </footer>
 </body>
@@ -110,6 +132,7 @@
             price: 5,
             desc: "Juicy grilled burger with cheese",
             img: "assets/img/item1.jpg",
+            category_id: 12,
             category: "Samosa"
           },
           {
@@ -118,6 +141,7 @@
             price: 8,
             desc: "Delicious cheesy pizza with toppings",
             img: "assets/img/item1.jpg",
+            category_id: 13,
             category: "misal-pav"
           },
           {
@@ -126,6 +150,7 @@
             price: 7,
             desc: "Creamy Alfredo pasta with herbs",
             img: "assets/img/item1.jpg",
+            category_id: 14,
             category: "sandwiches"
           },
           {
@@ -134,30 +159,74 @@
             price: 4,
             desc: "Fresh garden salad with dressing",
             img: "assets/img/item1.jpg",
+            category_id: 15,
             category: "pav-bhaji"
+          },
+          {
+            id: 5,
+            name: "Btr pav bhaji",
+            price: 4,
+            desc: "Fresh garden salad with dressing",
+            img: "assets/img/item1.jpg",
+            category_id: 15,
+            category: "pav-bhaji"
+          },
+          {
+            id: 6,
+            name: "Btr bhel",
+            price: 4,
+            desc: "Fresh garden salad with dressing",
+            img: "assets/img/item1.jpg",
+            category_id: 18,
+            category: "bhel"
+          },
+          {
+            id: 7,
+            name: "Btr bhel",
+            price: 4,
+            desc: "Fresh garden salad with dressing",
+            img: "assets/img/item1.jpg",
+            category_id: 18,
+            category: "bhel"
           },
         ];
 
         let cart = [];
+        
+        function showHideSections(section) {
+          idArray = ["menu-header", "menu-list", "category-nav-container","search","cart","menu","order-success","footer-bar"]
+          idArray.forEach((id)=>{
+            if(section.includes(id) && $('#'+id+':visible').length == 0 ){
+              console.log("show ",id)
+              if(id=='menu-list')
+                document.getElementById(id).setAttribute("style","display: flex !important");
+              else
+                document.getElementById(id).setAttribute("style","display: block !important");
 
-        function displayMenu2(category = '', update = 0) {
+            }else if(!section.includes(id) && $('#'+id+':visible').length == 1){
+              console.log("hide ",id)
+              document.getElementById(id).setAttribute("style","display: none !important");
+            }
+
+          })
+        }
+        function displayMenu2(category_id = '', update = 0) {
           document.getElementById('menu-nav-item').click();
-          document.getElementById("category-nav-container").setAttribute("style","display: block !important");
-          document.getElementById("menu-list").setAttribute("style","display: none !important");
-          document.getElementById("menu-header").setAttribute("style","display: none !important");
+          showHideSections(['category-nav-container'])
 
           const menuList = document.getElementById("menu-category-wise-list");
           menuList.innerHTML = "";
           menuCategory = menuItems;
-          category = category.toLowerCase().trim();
-          let found = menuItems.find((item) => item.category.toLowerCase() === category);
+          console.log("display menu category wise", category_id)
+         category_id = parseInt(category_id);
+          let found = menuItems.find((item) => item.category_id === category_id);
           if(!found){
             let div = document.createElement("div");
             div.innerHTML = '<div>Category not found</div>';
             menuList.append(div)
             return;
           }
-          menuCategory = menuItems.filter((item) => item.category.toLowerCase().trim() === category);
+          menuCategory = menuItems.filter((item) => item.category_id === category_id);
   
           menuCategory.forEach((item, index) => {
             let found = cart.find((cartItem) => cartItem.id === item.id);
@@ -187,11 +256,11 @@
                               ${
                                 quantity > 0
                                   ? `<div class='quantity'>
-                                      <button onclick='updateMenuQuantity(${item.id}, -1, "${item.category}")'>-</button>
+                                      <button onclick='updateMenuQuantity(${item.id}, -1, "${item.category_id}")'>-</button>
                                       <span>${quantity}</span>
-                                      <button onclick='updateMenuQuantity(${item.id}, 1, "${item.category}")'>+</button>
+                                      <button onclick='updateMenuQuantity(${item.id}, 1, "${item.category_id}")'>+</button>
                                   </div>`
-                                  : `<button class='add-btn' onclick='updateMenuQuantity(${item.id}, 1, "${item.category}")'>Add</button>`
+                                  : `<button class='add-btn' onclick='updateMenuQuantity(${item.id}, 1, "${item.category_id}")'>Add</button>`
                               }
                           </div>
                           </div>
@@ -202,11 +271,9 @@
         }
 
         function displayMenu() {
-          document.getElementById('menu-nav-item').click();
+          document.getElementById('home-nav-item').click();
           
-          document.getElementById("category-nav-container").setAttribute("style","display: none !important");
-          document.getElementById("menu-list").setAttribute("style","display: flex !important");
-          document.getElementById("menu-header").setAttribute("style","display: block !important");
+          showHideSections(['menu-list','menu-header','menu'])
 
           const menuList = document.getElementById("menu-list");
           menuList.innerHTML = "";
@@ -214,7 +281,7 @@
           menuItems.forEach((item, index) => {
             let div = document.createElement("div");
             div.classList.add("item-category");
-            div.setAttribute("category-name", `${item.category}`);
+            div.setAttribute("category-id", `${item.category_id}`);
             div.innerHTML = `
                             <img width="96" height="96" class="br-item" alt="${item.name}" src="${item.img}">
                             <p>${item.category}</p>
@@ -223,11 +290,51 @@
           });
         }
 
+        function searchItem() {
+          document.getElementById('search-nav-item').click();
+          showHideSections(['search'])
+          const searchList = document.getElementById("search-list");
+          searchList.innerHTML = "";
+
+          cart.forEach((item, index) => {
+            let div = document.createElement("div");
+            div.classList.add("cart-item");
+            div.classList.add("col-12");
+            div.classList.add("col-md-6");
+            div.innerHTML = `
+                    <div class="cardd row mb-2">
+                      <div class="col-4 col-md-4">
+                        <img width="96" height="96" class="br-item" alt="${item.name}" src="${item.img}">
+                      </div>
+                      <div class="cardd-body col-8 col-md-8">
+                        <div class="cardd-details">
+                          <div class="cardd-title fs-20 fw-600">${item.name}</div>
+                          <div>
+                            <p class="cardd-text fs-15"> ${item.desc} </p>
+                          </div>
+                        </div>
+                        <div class="cardd-footer-custom">
+                          <div class="left-item">
+                            <span class="fw-600"> ₹${item.price}</span>
+                          </div>
+                        
+                          <div class="menuu-actions">
+                              <div class='quantity'>
+                                  <button onclick='updateQuantity(${index}, -1)'>-</button>
+                                  <span>${item.quantity}</span>
+                                  <button onclick='updateQuantity(${index}, 1)'>+</button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>`;
+            searchList.appendChild(div);
+          });
+        }
+
         function viewCart() {
           document.getElementById('cart-nav-item').click();
-          document.getElementById("menu-header").style.display = "none";
-          document.getElementById("menu").style.display = "none";
-          document.getElementById("cart").style.display = "block";
+          showHideSections(['cart'])
+
           const cartList = document.getElementById("cart-list");
           const placeOrderBtn = document.getElementById("place-order");
 
@@ -290,15 +397,15 @@
            return object.find((item)=>item.id== id)
         }
 
-        function updateMenuQuantity(id, change, categoryName) {
+        function updateMenuQuantity(id, change, category_id) {
           let found = findItemById(id, cart)
           if(!found){
             console.log("new item");
             found = findItemById(id, menuItems); 
-            index = menuItems.findIndex(x => x.id ===id);
+            index = menuItems.findIndex(x => x.id === id);
           }
 
-          if (found?.quantity) {
+          if(found?.quantity) {
             found.quantity += change;
             if (found.quantity <= 0) {
               cart = cart.filter((item) => item.name !== found.name);
@@ -306,7 +413,7 @@
           } else if (change > 0) {
             cart.push({ ...menuItems[index], quantity: 1 });
           }
-          displayMenu2(categoryName);
+          displayMenu2(category_id);
         }
 
         function updateQuantity(index, change) {
@@ -322,40 +429,44 @@
             cart = []; // Reset cart only when coming from the order success page
           }
           displayMenu();
-          document.getElementById("menu").style.display = "block";
-          document.getElementById("menu-header").style.display = "block";
-          document.getElementById("cart").style.display = "none";
-          document.getElementById("order-success").style.display = "none";
+          showHideSections(['menu','menu-header','menu-list'])
+
         }
 
         function placeOrder() {
           cart = [];
-          document.getElementById("cart").style.display = "none";
-          document.getElementById("order-success").style.display = "block";
+          showHideSections(['order-success'])
         }
 
         //For footer nav-bar
         const navLinks = document.querySelectorAll('.nav-item');
         navLinks.forEach(e =>{
           e.addEventListener('click',()=>{
-            document.querySelector('.active')?.classList.remove('active');
+            if(e.getAttribute('id') == 'menu-nav-item'){
+              console.log("click herer menu item nab");
+              $('.nav-item-category[category-id="13"]').click()
+            }
+            document.querySelector('.nav-item.active')?.classList.remove('active');
             e.classList.add('active');
           })
         })
         
-        const navCategory = document.querySelectorAll('.item-category');
+        const navCategory = document.querySelectorAll('.nav-item-category');
         navCategory.forEach(e =>{
-          e.addEventListener('click',(c)=>{
-            document.querySelector('.active')?.classList.remove('active');
+          e.addEventListener('click',()=>{
+            const categoryId = $(e).attr('category-id')?.trim();
+            if(categoryId > 0)
+            displayMenu2(categoryId);
+
+            document.querySelector('.nav-item-category.active')?.classList.remove('active');
             e.classList.add('active');
           })
         })
 
         $(document).on("click", '.item-category' ,function() {
-          const categoryName = $(this).attr('category-name').trim();
-          console.log("click",categoryName);
-          displayMenu2(categoryName);
-        });    
+          const categoryId = $(this).attr('category-id')?.trim();
+          $('.nav-item-category[category-id="'+categoryId+'"]').click()
+        }); 
         displayMenu();
       </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
