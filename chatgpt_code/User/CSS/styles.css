@@ -361,6 +361,11 @@ div#menu-category-wise-list{
     background-color:#fbf6f0;
 }
 
+@media only screen and (min-width: 400px) {
+    .item-category{
+        width: 33%;
+    }
+}
 /* search */
 /* Google Font for title */
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
