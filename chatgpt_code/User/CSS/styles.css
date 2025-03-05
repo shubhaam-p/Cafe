@@ -339,7 +339,13 @@ body {
 }
 
 div#menu-category-wise-list{
-    margin-top: 2rem;
+    margin-top: 3rem;
+}
+
+@media only screen and (min-width: 400px) {
+    .item-category{
+        width: 33%;
+    }
 }
 /* category */
 
@@ -361,10 +367,10 @@ div#menu-category-wise-list{
     background-color:#fbf6f0;
 }
 
-@media only screen and (min-width: 400px) {
-    .item-category{
-        width: 33%;
-    }
+/* search-bar */
+.form-control:focus {
+    border-color: #ff8080 !important;
+    box-shadow: 0 0 0 .2rem rgb(91 34 34 / 25%) !important;
 }
 /* search */
 /* Google Font for title */

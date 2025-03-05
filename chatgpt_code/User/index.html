@@ -188,6 +188,7 @@
         ];
 
         let cart = [];
+        let search = [];
         let currentPage = "";
         let defaultCategory = 13;
         
@@ -206,7 +207,7 @@
 
           })
         }
-        function displayMenu2(category_id = '', push = false) {
+        function displayMenu2(category_id = '') {
           document.getElementById('menu-nav-item').click();
           showHideSections(['category-nav-container'])
 
@@ -265,7 +266,7 @@
           });
         }
 
-        function displayMenu(push=false) {
+        function displayMenu() {
           document.getElementById('home-nav-item').click();
           
           showHideSections(['menu-list','menu-header','menu'])
@@ -292,11 +293,12 @@
           const searchList = document.getElementById("search-list");
           searchList.innerHTML = "";
 
-          cart.forEach((item, index) => {
+          search.forEach((item, index) => {
             let div = document.createElement("div");
             div.classList.add("cart-item");
             div.classList.add("col-12");
             div.classList.add("col-md-6");
+            let quantity = item.quantity ? item.quantity : 0;
             div.innerHTML = `
                     <div class="cardd row mb-2">
                       <div class="col-4 col-md-4">
@@ -314,18 +316,38 @@
                             <span class="fw-600"> ₹${item.price}</span>
                           </div>
                         
-                          <div class="menuu-actions">
-                              <div class='quantity'>
-                                  <button onclick='updateQuantity(${index}, -1)'>-</button>
-                                  <span>${item.quantity}</span>
-                                  <button onclick='updateQuantity(${index}, 1)'>+</button>
-                              </div>
+                           <div class="menuu-actions">
+                              ${
+                                quantity > 0
+                                  ? `<div class='quantity'>
+                                      <button onclick='updateMenuQuantity(${item.id}, -1, "${item.category_id}",1)'>-</button>
+                                      <span>${quantity}</span>
+                                      <button onclick='updateMenuQuantity(${item.id}, 1, "${item.category_id}",1)'>+</button>
+                                  </div>`
+                                  : `<button class='add-btn' onclick='updateMenuQuantity(${item.id}, 1, "${item.category_id}",1)'>Add</button>`
+                              }
                           </div>
                         </div>
                       </div>`;
             searchList.appendChild(div);
           });
         }
+
+
+      // Search bar -- results
+      $(document).ready(function () {
+          $("#search-bar").on("keyup", function () {
+              let value = $(this).val().trim().toLowerCase();
+              if(value != '')
+                search = menuItems.filter(item => item.name.toLowerCase().includes(value));
+              else
+                search = [];
+              searchItem();
+          });
+      });
+
+
+
 
         function viewCart() {
           document.getElementById('cart-nav-item').click();
@@ -393,7 +415,7 @@
            return object.find((item)=>item.id== id)
         }
 
-        function updateMenuQuantity(id, change, category_id) {
+        function updateMenuQuantity(id, change, category_id, searchPage= 0) {
           let found = findItemById(id, cart)
           if(!found){
             found = findItemById(id, menuItems); 
@@ -402,20 +424,34 @@
 
           if(found?.quantity) {
             found.quantity += change;
+            
+            if(searchPage)
+              menuItems[index].quantity += change;
+
             if (found.quantity <= 0) {
               cart = cart.filter((item) => item.name !== found.name);
             }
-          } else if (change > 0) {
+          } 
+          else if (change > 0) {
+            if(searchPage)
+              menuItems[index].quantity = 1;
             cart.push({ ...menuItems[index], quantity: 1 });
           }
-          displayMenu2(category_id);
+
+          if(searchPage)
+            searchItem()
+          else
+            displayMenu2(category_id);
         }
 
-        function updateQuantity(index, change) {
+        function updateQuantity(index, change, searchPage) {
           cart[index].quantity += change;
           if (cart[index].quantity <= 0) {
             cart.splice(index, 1);
           }
+          if(searchPage)
+            searchItem()
+          else
           viewCart();
         }
 
@@ -436,6 +472,7 @@
           e.addEventListener('click',()=>{
             if(e.getAttribute('id') == 'menu-nav-item'){
               $('.nav-item-category[category-id="'+defaultCategory+'"]').click()
+              $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+defaultCategory+'"').position().left}, 300);
             }
             document.querySelector('.nav-item.active')?.classList.remove('active');
             e.classList.add('active');
@@ -450,8 +487,6 @@
             if(categoryId > 0){
               displayMenu2(categoryId);
               loadPage('menu', true, true)
-              // For scrolling in menu page
-              $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+categoryId+'"').position().left}, 300);
             }
             document.querySelector('.nav-item-category.active')?.classList.remove('active');
             e.classList.add('active');
@@ -461,9 +496,12 @@
         $(document).on("click", '.item-category' ,function() {
           const categoryId = $(this).attr('category-id')?.trim();
           $('.nav-item-category[category-id="'+categoryId+'"]').click()
+              // For scrolling in menu page
+              $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+categoryId+'"').position().left}, 300);
         }); 
 
         function loadPage(page, push=true, doNotLoad = false){
+          //page- name, push - push to history, doNotLoad - if page is already loaded for not loading it again, then set it to true
           let pageExists = true;
           if(page == currentPage){
             console.log("return no -load page")
@@ -474,6 +512,12 @@
             currentPage = page;
             console.log("push state")
             history.pushState({ page }, "", `#${page}`);
+          }
+
+          // Reset search bar
+          if(page != 'search' && $("#search-bar").val().trim() != ''){
+            $("#search-bar").val('')
+            $("#search-bar").trigger('keyup')
           }
 
           if(!doNotLoad){
