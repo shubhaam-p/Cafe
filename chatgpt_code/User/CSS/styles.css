@@ -347,6 +347,10 @@ div#menu-category-wise-list{
         width: 33%;
     }
 }
+.item-category img{
+    display: block;
+    margin: auto;
+}
 /* category */
 
 /* search */

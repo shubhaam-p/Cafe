@@ -64,7 +64,7 @@
         </div>
         <div id="search-body" class="px-3">
           <div class="input-group mb-2" id="search-bar-container">
-            <input type="text" class="form-control" id="search-bar" placeholder="Username">
+            <input type="text" class="form-control" id="search-bar" placeholder="Search here">
             <div class="input-group-append">
               <div class="input-group-text"><img src="assets/search.svg" alt="offers"></div>
             </div>
@@ -79,11 +79,11 @@
             <img src="assets/home.svg" alt="home">
             <p class="mob-footer-label takeaway">Home</p>
           </div>
-          <div role="presentation" id="menu-nav-item" class="nav-item u_cursor_pointer" data-page="menu">
+          <div role="presentation" id="menu-nav-item" class="nav-item u_cursor_pointer" data-page="menu" onclick="loadPage('menu')">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
               <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
             </svg>
-            <p class="mob-footer-label ">Menu</p>
+            <p class="mob-footer-label">Menu</p>
           </div>
           <div role="presentation" id="search-nav-item" class="nav-item u_cursor_pointer" onclick="loadPage('search')" data-page="search">
             <img src="assets/search.svg" alt="search">
@@ -191,6 +191,9 @@
         let search = [];
         let currentPage = "";
         let defaultCategory = 13;
+        let divCart = `<div class="action-buttons" data-page="cart">
+                      <button onclick="viewCart()">View Cart</button>
+                      </div>`
         
         function showHideSections(section) {
           idArray = ["menu-header", "menu-list", "category-nav-container","search","cart","menu","order-success"]
@@ -214,7 +217,7 @@
           const menuList = document.getElementById("menu-category-wise-list");
           menuList.innerHTML = "";
           menuCategory = menuItems;
-         category_id = parseInt(category_id);
+          category_id = parseInt(category_id);
           let found = menuItems.find((item) => item.category_id === category_id);
           if(!found){
             let div = document.createElement("div");
@@ -264,6 +267,7 @@
                       </div>`;
             menuList.appendChild(div);
           });
+          $('#menu-category-wise-list').append(divCart)
         }
 
         function displayMenu() {
@@ -278,7 +282,6 @@
             let div = document.createElement("div");
             div.classList.add("item-category");
             div.setAttribute("category-id", `${item.category_id}`);
-            // div.setAttribute("data-page", "menu");
             div.innerHTML = `
                             <img width="96" height="96" class="br-item" alt="${item.name}" src="${item.img}">
                             <p>${item.category}</p>
@@ -288,7 +291,6 @@
         }
 
         function searchItem() {
-          document.getElementById('search-nav-item').click();
           showHideSections(['search'])
           const searchList = document.getElementById("search-list");
           searchList.innerHTML = "";
@@ -298,7 +300,10 @@
             div.classList.add("cart-item");
             div.classList.add("col-12");
             div.classList.add("col-md-6");
-            let quantity = item.quantity ? item.quantity : 0;
+            let found = cart.find((cartItem) => cartItem.id === item.id);
+            let quantity = found ? found.quantity : 0;
+
+            // let quantity = item.quantity ? item.quantity : 0;
             div.innerHTML = `
                     <div class="cardd row mb-2">
                       <div class="col-4 col-md-4">
@@ -345,9 +350,6 @@
               searchItem();
           });
       });
-
-
-
 
         function viewCart() {
           document.getElementById('cart-nav-item').click();
@@ -452,7 +454,7 @@
           if(searchPage)
             searchItem()
           else
-          viewCart();
+            viewCart();
         }
 
         function goBack(reset = false) {
@@ -471,40 +473,47 @@
         navLinks.forEach(e =>{
           e.addEventListener('click',()=>{
             if(e.getAttribute('id') == 'menu-nav-item'){
-              $('.nav-item-category[category-id="'+defaultCategory+'"]').click()
-              $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+defaultCategory+'"').position().left}, 300);
+              //fetching category-id, for after refreshing page/ default, whenever on menu page, to make footer menu active, this is used
+              let categoryId = $('.nav-item-category.active').attr('category-id')>0 ? $('.nav-item-category.active').attr('category-id'): defaultCategory;
+              $('.nav-item-category[category-id="'+categoryId+'"]').click();
+              //For not scrolling if already on page
+              if($('#category-nav-container:visible').length == 0)
+                $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+categoryId+'"').position().left}, 300);
             }
             document.querySelector('.nav-item.active')?.classList.remove('active');
             e.classList.add('active');
           })
         })
         
-        // for menu page
+        // for menu page, nav bar
         const navCategory = document.querySelectorAll('.nav-item-category');
         navCategory.forEach(e =>{
           e.addEventListener('click',()=>{
             const categoryId = $(e).attr('category-id')?.trim();
             if(categoryId > 0){
               displayMenu2(categoryId);
-              loadPage('menu', true, true)
+              loadPage('menu')
             }
             document.querySelector('.nav-item-category.active')?.classList.remove('active');
             e.classList.add('active');
           })
         })
 
+        // category on home page
         $(document).on("click", '.item-category' ,function() {
           const categoryId = $(this).attr('category-id')?.trim();
           $('.nav-item-category[category-id="'+categoryId+'"]').click()
-              // For scrolling in menu page
-              $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+categoryId+'"').position().left}, 300);
+          // For scrolling in menu page
+          $('.menu-category').animate({scrollLeft: $('.nav-item-category[category-id="'+categoryId+'"').position().left}, 300);
         }); 
 
+        // https://stackoverflow.com/questions/6674669/in-jquery-how-can-i-tell-between-a-programmatic-and-user-click
+        // this can be used to stop loading page again and again, as we are clicking to make navbar active and all.
+        
         function loadPage(page, push=true, doNotLoad = false){
           //page- name, push - push to history, doNotLoad - if page is already loaded for not loading it again, then set it to true
           let pageExists = true;
           if(page == currentPage){
-            console.log("return no -load page")
             return;
           }
 
@@ -529,7 +538,8 @@
              pageExists = true;
   
             }else if(page == 'search'){
-              searchItem()
+              searchItem();
+              document.getElementById('search-nav-item').click();
               pageExists = true;
   
             }else if(page == 'cart'){
@@ -543,11 +553,12 @@
         }
 
         window.addEventListener("popstate", function (event) {
-          console.log("-----------popstate ",event.state?.page);
+          // console.log("-----------popstate ",event.state?.page);
             if (event.state) {
-                loadPage(event.state.page, false);
+              console.log('popstate ?? ')
+              loadPage('home', false);
             }else {
-                if (history.length > 1) {
+              if (history.length > 1) {
                     history.back(); // Let the browser handle it if possible
                 } else {
                     window.location.href = "about:blank"; // Exit to a blank page
